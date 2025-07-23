@@ -32,9 +32,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->registration()
-            ->passwordReset() // <<< TAMBAHKAN BARIS INI UNTUK MENGAKTIFKAN LUPA KATA SANDI
-            ->brandName('ALGIO TRANS')
+            // ->registration()
+            // ->passwordReset() // <<< TAMBAHKAN BARIS INI UNTUK MENGAKTIFKAN LUPA KATA SANDI
+            ->brandName('Algio Trans')
             ->profile(false)
             ->colors([
                 'primary' => Color::Sky,

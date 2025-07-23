@@ -75,24 +75,24 @@
                         <i class="fas fa-wallet mr-2 text-sky-600"></i> Pilih Metode Pembayaran
                     </h3>
                     <div class="space-y-3">
-                        {{-- Opsi Pembayaran Transfer Bank BRI --}}
+                        {{-- Opsi Pembayaran Transfer Bank BJB --}}
                         <div class="p-4 border-2 border-sky-300 rounded-xl bg-sky-50 hover:bg-sky-100 transition duration-200">
                             <label for="bank_transfer" class="flex items-center cursor-pointer">
-                                <input type="radio" id="bank_transfer" name="payment_method" value="Transfer Bank BRI" class="form-radio h-5 w-5 text-sky-600 focus:ring-sky-500" checked required>
+                                <input type="radio" id="bank_transfer" name="payment_method" value="Transfer Bank BJB" class="form-radio h-5 w-5 text-sky-600 focus:ring-sky-500" checked required>
                                 <span class="ml-3 text-lg font-semibold text-sky-800 flex items-center">
-                                    <i class="fas fa-bank mr-2 text-sky-600 text-xl"></i> Transfer Bank BRI
+                                    <i class="fas fa-bank mr-2 text-sky-600 text-xl"></i> Transfer Bank BJB
                                 </span>
                             </label>
                             <div class="mt-4 border-t border-sky-200 pt-4 space-y-2">
                                 <p class="text-sm text-gray-600">Silakan transfer ke rekening berikut:</p>
                                 <div class="flex items-center">
-                                    <strong class="text-gray-800 text-lg">Bank BRI:</strong>
-                                    <span id="bank-account-number" class="ml-2 font-mono text-xl text-sky-700 font-bold mr-2">{{ env('BANK_BRI_ACCOUNT_NUMBER') }}</span>
+                                    <strong class="text-gray-800 text-lg">Bank BJB:</strong>
+                                    <span id="bank-account-number" class="ml-2 font-mono text-xl text-sky-700 font-bold mr-2">{{ env('BANK_BJB_ACCOUNT_NUMBER') }}</span>
                                     <i class="fas fa-copy text-sky-500 cursor-pointer hover:text-sky-700 transition-colors duration-200 text-base"
-                                       onclick="copyToClipboard('{{ env('BANK_BRI_ACCOUNT_NUMBER') }}', 'Nomor rekening berhasil disalin!')"
+                                       onclick="copyToClipboard('{{ env('BANK_BJB_ACCOUNT_NUMBER') }}', 'Nomor rekening berhasil disalin!')"
                                        title="Salin Nomor Rekening"></i>
                                 </div>
-                                <p class="text-base text-gray-700">A.N: <strong class="text-gray-800">{{ env('BANK_BRI_ACCOUNT_NAME') }}</strong></p>
+                                <p class="text-base text-gray-700">A.N: <strong class="text-gray-800">{{ env('BANK_BJB_ACCOUNT_NAME') }}</strong></p>
                                 <p class="text-sm text-red-500">
                                     <i class="fas fa-exclamation-circle mr-1"></i> Penting: Pastikan jumlah transfer sama persis dengan total yang harus dibayar.
                                 </p>
@@ -104,13 +104,24 @@
                             <i class="fas fa-exclamation-triangle text-yellow-600 text-2xl"></i>
                             <div>
                                 <h4 class="font-bold text-lg">Metode Pembayaran Lain</h4>
-                                <p class="text-base">Saat ini, opsi Pembayaran Tunai dan metode pembayaran online lainnya (seperti e-wallet atau bank lain) sedang dalam pemeliharaan. Mohon gunakan opsi <b>Transfer Bank BRI</b> yang tersedia di atas.</p>
+                                <p class="text-base">Untuk pembayaran Tunai, silakan lakukan pembelian tiket melalui nomor whatsapp yang tersedia. Saat ini, metode pembayaran online lainnya (seperti e-wallet atau bank lain) sedang dalam pemeliharaan. Mohon gunakan opsi <b>Transfer Bank BJB</b> yang tersedia di atas.</p>
                             </div>
                         </div>
                     </div>
 
+                    {{-- Checkbox Persetujuan Kebijakan & Syarat Ketentuan --}}
+                    <div class="mt-5 p-4 bg-sky-50 rounded-lg border border-dashed border-sky-200 text-center text-gray-700 text-sm">
+                        <label class="flex items-center justify-center cursor-pointer">
+                            <input type="checkbox" id="agree_terms" class="form-checkbox h-5 w-5 text-sky-600 focus:ring-sky-500 mr-2" required>
+                            <span>Saya telah membaca dan menyetujui
+                                <span class="font-semibold text-sky-600">Kebijakan Privasi</span> dan
+                                <span class="font-semibold text-sky-600">Syarat & Ketentuan</span>
+                            </span>
+                        </label>
+                    </div>
+
                     <div class="text-center mt-6">
-                        <button type="submit" id="pay-now-button" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 shadow-lg transform hover:scale-105 flex items-center justify-center">
+                        <button type="submit" id="pay-now-button" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 shadow-lg transform hover:scale-105 flex items-center justify-center" disabled> {{-- Initially disabled --}}
                             <span id="pay-button-text">Bayar Sekarang</span>
                             <svg id="pay-loading-spinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -124,9 +135,9 @@
     </div>
 </div>
 
-{{-- Custom Toast Notification HTML (for copy functionality) --}}
+{{-- Custom Toast Notification HTML --}}
 <div id="toast-notification" class="fixed top-4 right-4 z-[9999] p-4 rounded-lg shadow-lg flex items-center space-x-3
-    transform translate-x-full transition-transform duration-300 ease-out">
+    transform translate-x-full transition-transform duration-300 ease-out opacity-0 pointer-events-none">
     <i id="toast-icon" class="fas text-2xl"></i>
     <div class="flex-grow">
         <h4 id="toast-title" class="font-bold text-lg mb-1"></h4>
@@ -136,6 +147,29 @@
         <i class="fas fa-times"></i>
     </button>
 </div>
+
+{{-- Modals for Privacy Policy and Terms & Conditions (These should be included, perhaps in layouts.app or at the very end of this file) --}}
+{{-- Privacy Policy Modal --}}
+    <div id="privacyPolicyModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" data-modal-close="privacyPolicyModal">&times;</button>
+            <h2 class="text-3xl font-bold section-title mb-6 text-center">Kebijakan Privasi</h2>
+            <div class="prose max-w-none text-gray-700">
+                {{-- Content removed as requested --}}
+            </div>
+        </div>
+    </div>
+
+    {{-- Terms & Conditions Modal --}}
+    <div id="termsConditionsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" data-modal-close="termsConditionsModal">&times;</button>
+            <h2 class="text-3xl font-bold section-title mb-6 text-center">Syarat & Ketentuan</h2>
+            <div class="prose max-w-none text-gray-700">
+                {{-- Content removed as requested --}}
+            </div>
+        </div>
+    </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -153,9 +187,35 @@
         const payNowButton = document.getElementById('pay-now-button');
         const payButtonText = document.getElementById('pay-button-text');
         const payLoadingSpinner = document.getElementById('pay-loading-spinner');
+        const agreeTermsCheckbox = document.getElementById('agree_terms'); // Get the checkbox
+
+        // Enable/disable pay button based on checkbox state
+        function togglePayButton() {
+            if (agreeTermsCheckbox.checked) {
+                payNowButton.disabled = false;
+                payNowButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                payNowButton.disabled = true;
+                payNowButton.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Initial check on page load
+        togglePayButton();
+
+        // Listen for checkbox change
+        agreeTermsCheckbox.addEventListener('change', togglePayButton);
+
 
         if (paymentForm && payNowButton) {
-            paymentForm.addEventListener('submit', () => {
+            paymentForm.addEventListener('submit', (event) => {
+                // Prevent submission if checkbox is not checked (redundant due to disabled button, but good for safety)
+                if (!agreeTermsCheckbox.checked) {
+                    showToast('error', 'Persetujuan Diperlukan!', 'Anda harus menyetujui Kebijakan Privasi dan Syarat & Ketentuan.');
+                    event.preventDefault(); // Stop form submission
+                    return;
+                }
+
                 // Show loading spinner and disable button
                 payButtonText.textContent = 'Memproses Pembayaran...';
                 payLoadingSpinner.classList.remove('hidden');
@@ -179,6 +239,7 @@
             toastTitle.textContent = title;
             toastMessage.textContent = message;
 
+            // Reset classes
             toastNotification.className = 'fixed top-4 right-4 z-[9999] p-4 rounded-lg shadow-lg flex items-center space-x-3 transform transition-transform duration-300 ease-out';
             toastIcon.className = 'fas text-2xl';
 
@@ -196,7 +257,11 @@
                 toastIcon.classList.add('fa-info-circle', 'text-sky-500');
             }
 
+            // Show the toast by removing hidden state and making it visible
             toastNotification.classList.remove('translate-x-full');
+            toastNotification.classList.add('opacity-100', 'pointer-events-auto');
+            // Ensure display is set to flex for visibility
+            toastNotification.style.display = 'flex';
 
             toastTimeout = setTimeout(() => {
                 hideToast();
@@ -204,7 +269,18 @@
         }
 
         function hideToast() {
+            // Start hiding animation
             toastNotification.classList.add('translate-x-full');
+            toastNotification.classList.remove('opacity-100', 'pointer-events-auto');
+
+            // Wait for transition to complete, then set display to none
+            toastNotification.addEventListener('transitionend', function handler() {
+                if (toastNotification.classList.contains('translate-x-full') && !toastNotification.classList.contains('opacity-100')) {
+                    toastNotification.style.display = 'none';
+                    // Remove the event listener itself after it fires once
+                    toastNotification.removeEventListener('transitionend', handler);
+                }
+            }, { once: true }); // Use { once: true } for cleaner event listener removal
         }
 
         toastCloseButton.addEventListener('click', () => {
@@ -222,6 +298,9 @@
                 showToast('error', 'Gagal!', 'Gagal menyalin teks. Silakan coba lagi.');
             }
         };
+
+        // Removed modal logic as requested, since the links are no longer clickable
+        // and modal content is removed.
     });
 </script>
 

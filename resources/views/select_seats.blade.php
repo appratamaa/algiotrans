@@ -131,7 +131,7 @@
 
 {{-- Custom Toast Notification HTML --}}
 <div id="toast-notification" class="fixed top-4 right-4 z-[9999] p-4 rounded-lg shadow-lg flex items-center space-x-3
-    transform translate-x-full transition-transform duration-300 ease-out">
+    transform translate-x-full transition-transform duration-300 ease-out opacity-0 pointer-events-none">
     <i id="toast-icon" class="fas text-2xl"></i>
     <div class="flex-grow">
         <h4 id="toast-title" class="font-bold text-lg mb-1"></h4>
@@ -200,9 +200,11 @@
             toastTitle.textContent = title;
             toastMessage.textContent = message;
 
+            // Reset classes
             toastNotification.className = 'fixed top-4 right-4 z-[9999] p-4 rounded-lg shadow-lg flex items-center space-x-3 transform transition-transform duration-300 ease-out';
             toastIcon.className = 'fas text-2xl';
 
+            // Apply type-specific classes
             if (type === 'success') {
                 toastNotification.classList.add('bg-sky-100', 'border-l-4', 'border-sky-500', 'text-sky-800');
                 toastIcon.classList.add('fa-check-circle', 'text-sky-500');
@@ -217,7 +219,11 @@
                 toastIcon.classList.add('fa-info-circle', 'text-sky-500');
             }
 
+            // Show the toast by removing hidden state and making it visible
             toastNotification.classList.remove('translate-x-full');
+            toastNotification.classList.add('opacity-100', 'pointer-events-auto');
+            // Remove display: none if it was set
+            toastNotification.style.display = 'flex'; // Use flex so content is centered
 
             toastTimeout = setTimeout(() => {
                 hideToast();
@@ -225,7 +231,18 @@
         }
 
         function hideToast() {
+            // Start hiding animation
             toastNotification.classList.add('translate-x-full');
+            toastNotification.classList.remove('opacity-100', 'pointer-events-auto');
+
+            // Wait for transition to complete, then set display to none
+            toastNotification.addEventListener('transitionend', function handler() {
+                if (toastNotification.classList.contains('translate-x-full')) {
+                    toastNotification.style.display = 'none';
+                    // Remove the event listener itself after it fires once
+                    toastNotification.removeEventListener('transitionend', handler);
+                }
+            });
         }
 
         toastCloseButton.addEventListener('click', () => {

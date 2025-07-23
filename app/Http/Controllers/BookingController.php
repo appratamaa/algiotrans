@@ -250,7 +250,7 @@ class BookingController extends Controller
         // Create the payment record with 'pending' status
         $payment = Payment::create([
             'booking_id' => $booking->id,
-            'payment_method' => $request->payment_method, // Will be 'Transfer Bank BRI'
+            'payment_method' => $request->payment_method, // Will be 'Transfer Bank BJB'
             'transaction_id' => 'TRX-' . Str::upper(Str::random(10)),
             'amount' => $booking->total_price,
             'payment_date' => now(), // Initial payment date
@@ -278,11 +278,11 @@ class BookingController extends Controller
         $token = env('ULTRAMSG_API_TOKEN');
         $baseUrl = env('ULTRAMSG_BASE_URL');
         $adminNumber = env('ADMIN_WHATSAPP_NUMBER');
-        $briAccountNumber = env('BANK_BRI_ACCOUNT_NUMBER');
-        $briAccountName = env('BANK_BRI_ACCOUNT_NAME');
+        $BJBAccountNumber = env('BANK_BJB_ACCOUNT_NUMBER');
+        $BJBAccountName = env('BANK_BJB_ACCOUNT_NAME');
 
 
-        if (!$instanceId || !$token || !$baseUrl || !$adminNumber || !$briAccountNumber || !$briAccountName) {
+        if (!$instanceId || !$token || !$baseUrl || !$adminNumber || !$BJBAccountNumber || !$BJBAccountName) {
             Log::error('ULTRAMSG API credentials or Bank/Admin numbers not set.');
             session()->flash('error', 'Gagal mengirim notifikasi WhatsApp: Konfigurasi belum lengkap.');
             return;
@@ -317,7 +317,7 @@ class BookingController extends Controller
         $adminMessage .= "\nTotal Harga: Rp " . number_format($booking->total_price, 0, ',', '.') . "\n";
         $adminMessage .= "Alamat Jemput: {$booking->pickup_address}\n";
         $adminMessage .= "Alamat Tujuan: {$booking->dropoff_address}\n";
-        $adminMessage .= "Metode Pembayaran: *Transfer Bank BRI*\n";
+        $adminMessage .= "Metode Pembayaran: *Transfer Bank BJB*\n";
         $statusPembayaran = $payment && $payment->status ? $payment->status : $booking->status;
         $adminMessage .= "Status Pembayaran: *{$statusPembayaran}*";
         $adminMessage .= "\n\nMohon cek bukti transfer yang akan dikirim customer.";
@@ -352,10 +352,10 @@ class BookingController extends Controller
         $customerMessage .= "\n*Total yang harus dibayar: Rp " . number_format($booking->total_price, 0, ',', '.') . "*\n";
         $customerMessage .= "Alamat Jemput: {$booking->pickup_address}\n";
         $customerMessage .= "Alamat Tujuan: {$booking->dropoff_address}\n\n";
-        $customerMessage .= "*Mohon segera lakukan pembayaran via Transfer Bank BRI ke:*\n";
-        $customerMessage .= "Bank: *Bank BRI*\n";
-        $customerMessage .= "Nomor Rekening: *{$briAccountNumber}*\n";
-        $customerMessage .= "Atas Nama: *{$briAccountName}*\n\n";
+        $customerMessage .= "*Mohon segera lakukan pembayaran via Transfer Bank BJB ke:*\n";
+        $customerMessage .= "Bank: *Bank BJB*\n";
+        $customerMessage .= "Nomor Rekening: *{$BJBAccountNumber}*\n";
+        $customerMessage .= "Atas Nama: *{$BJBAccountName}*\n\n";
         $customerMessage .= "Setelah transfer, *kirim bukti transfer (screenshot) ke nomor WhatsApp ini* ({$adminNumber}).\n";
         $customerMessage .= "Pemesanan Anda akan dikonfirmasi setelah pembayaran diverifikasi oleh admin.\n\n";
         $customerMessage .= "Mohon hadir 15 menit sebelum keberangkatan.\n";

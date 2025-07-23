@@ -100,7 +100,7 @@
                                 </label>
                                 <select name="route_id" id="route_id_passenger"
                                     class="w-full py-3 px-5 border border-gray-300 rounded-lg text-gray-800 leading-tight
-                                           focus:outline-none"> {{-- Removed focus:ring-2 and focus:border-transparent --}}
+                                           focus:outline-none">
                                     <option value="">Pilih Tujuan</option>
                                     @foreach ($routes as $route)
                                         <option value="{{ $route->id }}">{{ $route->origin }} - {{ $route->destination }}
@@ -114,7 +114,7 @@
                                 </label>
                                 <input type="date" name="departure_date" id="departure_date_passenger"
                                     class="w-full py-3 px-5 border border-gray-300 rounded-lg text-gray-800 leading-tight
-                                           focus:outline-none"> {{-- Removed focus:ring-2 and focus:border-transparent --}}
+                                           focus:outline-none">
                             </div>
                             <div>
                                 <label for="num_passengers" class="block text-gray-700 text-lg font-bold mb-3">
@@ -123,7 +123,7 @@
                                 <input type="number" name="num_passengers" id="num_passengers" min="1"
                                     max="7"
                                     class="w-full py-3 px-5 border border-gray-300 rounded-lg text-gray-800 leading-tight
-                                           focus:outline-none"> {{-- Removed focus:ring-2 and focus:border-transparent --}}
+                                           focus:outline-none">
                             </div>
                         </div>
 
@@ -136,7 +136,7 @@
                                 </label>
                                 <select name="route_id" id="route_id_item_delivery"
                                     class="w-full py-3 px-5 border border-gray-300 rounded-lg text-gray-800 leading-tight
-                                           focus:outline-none"> {{-- Removed focus:ring-2 and focus:border-transparent --}}
+                                           focus:outline-none">
                                     <option value="">Pilih Tujuan</option>
                                     @foreach ($routes as $route)
                                         <option value="{{ $route->id }}">{{ $route->origin }} - {{ $route->destination }}
@@ -151,7 +151,7 @@
                                 </label>
                                 <input type="date" name="departure_date" id="departure_date_item_delivery"
                                     class="w-full py-3 px-5 border border-gray-300 rounded-lg text-gray-800 leading-tight
-                                           focus:outline-none" {{-- Removed focus:ring-2 and focus:border-transparent --}}
+                                           focus:outline-none"
                                     min="{{ date('Y-m-d') }}">
                             </div>
                         </div>
@@ -257,25 +257,230 @@
                 </div>
             </section>
 
-
-            {{-- CTA Section --}}
-            <section
-                class="bg-gradient-to-br from-blue-300 to-blue-500 text-white text-center p-12 rounded-3xl
-                            transform transition-all duration-500 ease-in-out hover:scale-[1.01]
-                            opacity-0 translate-y-10"
-                data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-6">Siap Untuk Perjalanan Anda Berikutnya?</h2>
-                <p class="text-xl mb-8">
-                    Jangan tunda lagi! Pesan tiket atau kirim paket Anda sekarang dan rasakan kemudahan bersama Algio Trans.
-                </p>
-                <a href="#booking-form" id="cta-button"
-                    class="inline-block bg-white text-blue-400 font-bold py-4 px-10 rounded-full text-xl
-                           hover:bg-gray-100 transform hover:scale-105 transition duration-300 ease-in-out
-                           animate-bounce-once">
-                    Mulai Sekarang! <i class="fas fa-arrow-alt-circle-right ml-2"></i>
-                </a>
+            {{-- About Us Section (Moved from app.blade) --}}
+            <section id="about-us" class="container mx-auto px-4 py-16 bg-white">
+                <hr class="border-t-2 border-dashed border-blue-300 mx-auto max-w-7xl mb-8">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-4xl font-extrabold section-title mb-4">Tentang Kami</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Algio Trans hadir sebagai solusi perjalanan dan pengiriman barang yang aman, nyaman, dan terpercaya.
+                        Kami berkomitmen untuk memberikan pelayanan terbaik bagi setiap pelanggan.
+                    </p>
+                </div>
+                <div class="text-center grid grid-cols-1 md:grid-cols-2 gap-10 items-center max-w-5xl mx-auto mb-12">
+                    <div>
+                        <h3 class="text-3xl font-bold section-title mb-4">Misi Kami</h3>
+                        <p class="text-gray-700 leading-relaxed mb-4">
+                            Menjadi pilihan utama dalam layanan transportasi dan logistik dengan mengedepankan keamanan,
+                            ketepatan waktu, dan kepuasan pelanggan. Kami terus berinovasi untuk memenuhi kebutuhan pasar
+                            yang dinamis.
+                        </p>
+                        <h3 class="text-3xl font-bold section-title mb-4">Visi Kami</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            Mewujudkan mobilitas yang efisien dan pengiriman yang andal melalui pemanfaatan teknologi
+                            terkini dan sumber daya manusia yang profesional.
+                        </p>
+                    </div>
+                    {{-- <div class="swiper image-carousel" data-aos="fade-left" data-aos-delay="200">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="{{ asset('image/Mobil1.jpeg') }}" alt="Algio Trans Image 1"
+                                    class="rounded-xl shadow-md">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('image/Mobil2.jpeg') }}" alt="Algio Trans Image 2"
+                                    class="rounded-xl shadow-md">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('image/Mobil3.jpeg') }}" alt="Algio Trans Image 3"
+                                    class="rounded-xl shadow-md">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('image/Mobil4.jpeg') }}" alt="Algio Trans Image 4"
+                                    class="rounded-xl shadow-md">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('image/Mobil5.jpeg') }}" alt="Algio Trans Image 5"
+                                    class="rounded-xl shadow-md">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('image/Mobil6.jpeg') }}" alt="Algio Trans Image 6"
+                                    class="rounded-xl shadow-md">
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div> --}}
+                </div>
             </section>
 
+            {{-- Services Section (Moved from app.blade) --}}
+            <section id="services" class="container mx-auto px-4 py-16">
+                <hr class="border-t-2 border-dashed border-blue-300 mx-auto max-w-7xl mb-8">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-4xl font-extrabold section-title mb-4">Layanan Kami</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Algio Trans menyediakan berbagai layanan untuk memenuhi kebutuhan mobilitas dan logistik Anda.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="p-6 card-dashed-border flex flex-col items-center text-center" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <div class="p-4 bg-blue-100 rounded-full mb-4">
+                            <i class="fas fa-bus text-blue-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold section-title mb-2">Travel Penumpang</h3>
+                        <p class="text-gray-600">
+                            Nikmati perjalanan yang nyaman dan aman dengan armada modern dan driver berpengalaman. Tersedia
+                            untuk berbagai rute.
+                        </p>
+                    </div>
+                    <div class="p-6 card-dashed-border flex flex-col items-center text-center" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div class="p-4 bg-blue-100 rounded-full mb-4">
+                            <i class="fas fa-box text-blue-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold section-title mb-2">Pengiriman Barang</h3>
+                        <p class="text-gray-600">
+                            Kirim paket Anda dengan cepat dan terjamin keamanannya. Cocok untuk dokumen penting hingga
+                            barang berukuran sedang.
+                        </p>
+                    </div>
+                    <div class="p-6 card-dashed-border flex flex-col items-center text-center" data-aos="fade-up"
+                        data-aos-delay="300">
+                        <div class="p-4 bg-blue-100 rounded-full mb-4">
+                            <i class="fas fa-headset text-blue-600 text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold section-title mb-2">Dukungan Pelanggan 24/7</h3>
+                        <p class="text-gray-600">
+                            Tim kami siap membantu Anda kapan saja untuk pertanyaan, pemesanan, atau kendala di perjalanan.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {{-- FAQ Section (Moved from app.blade) --}}
+            <section id="faq" class="container mx-auto px-4 py-16 bg-white">
+                <hr class="border-t-2 border-dashed border-blue-300 mx-auto max-w-7xl mb-8">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-4xl font-extrabold section-title mb-4">Pertanyaan Umum (FAQ)</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Temukan jawaban atas pertanyaan yang sering diajukan seputar layanan kami.
+                    </p>
+                </div>
+                <div class="max-w-3xl mx-auto space-y-6">
+                    {{-- FAQ Item 1 --}}
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="faq-question">
+                            <span>Bagaimana cara memesan travel?</span>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Anda dapat memesan langsung melalui halaman utama kami dengan memilih rute, tanggal, dan
+                                jenis pemesanan (penumpang atau barang). Ikuti langkah-langkah mudah yang tersedia.</p>
+                        </div>
+                    </div>
+
+                    {{-- FAQ Item 2 --}}
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="faq-question">
+                            <span>Apakah saya bisa mengubah jadwal setelah memesan?</span>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Perubahan jadwal tergantung pada ketersediaan dan kebijakan pembatalan/perubahan. Mohon
+                                hubungi layanan pelanggan kami secepatnya untuk bantuan.</p>
+                        </div>
+                    </div>
+
+                    {{-- FAQ Item 3 --}}
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="faq-question">
+                            <span>Bagaimana jika barang saya hilang atau rusak saat pengiriman?</span>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kami sangat berhati-hati dalam setiap pengiriman. Namun, jika terjadi hal yang tidak
+                                diinginkan, mohon segera laporkan kepada kami dengan bukti yang cukup untuk proses klaim
+                                sesuai syarat dan ketentuan.</p>
+                        </div>
+                    </div>
+
+                    {{-- FAQ Item 4 --}}
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="faq-question">
+                            <span>Metode pembayaran apa saja yang diterima?</span>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Kami menerima pembayaran melalui transfer bank dan metode pembayaran digital lainnya. Detail
+                                akan tersedia saat proses checkout.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {{-- Contact Section (Moved from app.blade) --}}
+            <section id="contact" class="container mx-auto px-4 py-16">
+                <hr class="border-t-2 border-dashed border-blue-300 mx-auto max-w-7xl mb-8">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-4xl font-extrabold section-title mb-4">Hubungi Kami</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Ada pertanyaan atau butuh bantuan? Jangan ragu untuk menghubungi tim kami.
+                    </p>
+                </div>
+                <div class="max-w-xl mx-auto p-6 card-dashed-border text-center" data-aos="fade-up">
+                    <h3 class="text-2xl font-bold section-title mb-4">Informasi Kontak Kami</h3>
+                    <p class="flex items-center justify-center text-gray-700 mb-2">
+                        <i class="fas fa-map-marker-alt mr-3 text-blue-500 text-xl"></i>
+                        Jl. Jurago Dusun Ciguha RT 001 RW 001 Desa Campaka Cigugur-Pangandaran
+                    </p>
+                    <p class="flex items-center justify-center text-gray-700 mb-2">
+                        <i class="fas fa-phone mr-3 text-blue-500 text-xl"></i>
+                        082117999587
+                    </p>
+                    <p class="flex items-center justify-center text-gray-700 mb-2">
+                        <i class="fab fa-whatsapp mr-3 text-blue-500 text-xl"></i>
+                        082117999587
+                    </p>
+                    <p class="flex items-center justify-center text-gray-700 mb-4">
+                        <i class="fas fa-envelope mr-3 text-blue-500 text-xl"></i>
+                        dwiiirissa@gmail.com
+                    </p>
+                    <div class="flex justify-center space-x-6 mt-6">
+                        <a href="https://facebook.com/AlgioTrans" target="_blank"
+                            class="text-gray-600 text-3xl transition duration-200 social-icon-hover"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-600 text-3xl transition duration-200 social-icon-hover"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/algiotrans" target="_blank"
+                            class="text-gray-600 text-3xl transition duration-200 social-icon-hover"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@Algiotransfamilly23" target="_blank"
+                            class="text-gray-600 text-3xl transition duration-200 social-icon-hover"><i
+                                class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                {{-- CTA Section (Moved from app.blade) --}}
+                <section
+                    class="bg-gradient-to-br from-blue-300 to-blue-500 text-white text-center p-12 rounded-3xl
+                                transform transition-all duration-500 ease-in-out hover:scale-[1.01]
+                                opacity-0 translate-y-10 mt-16"
+                    data-aos="fade-up">
+                    <h2 class="text-4xl font-bold mb-6">Siap Untuk Perjalanan Anda Berikutnya?</h2>
+                    <p class="text-xl mb-8">
+                        Jangan tunda lagi! Pesan tiket atau kirim paket Anda sekarang dan rasakan kemudahan bersama Algio
+                        Trans.
+                    </p>
+                    <a href="#booking-form" id="cta-button"
+                        class="inline-block bg-white text-blue-400 font-bold py-4 px-10 rounded-full text-xl
+                               hover:bg-gray-100 transform hover:scale-105 transition duration-300 ease-in-out
+                               animate-bounce-once">
+                        Mulai Sekarang! <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+                    </a>
+                </section>
+            </section>
         </div>
     </div>
 @endsection
@@ -286,6 +491,8 @@
     {{-- AOS Library for Scroll Animations --}}
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    {{-- Swiper JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     {{-- SweetAlert2 CSS and JS --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -297,6 +504,34 @@
             AOS.init({
                 duration: 1000,
                 once: true,
+            });
+
+            // Initialize Swiper Carousel for About Us
+            var swiper = new Swiper('.image-carousel', {
+                effect: 'coverflow', // Or 'slide', 'fade', 'cube', 'flip', 'cards'
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 'auto', // Adjust based on how many slides you want visible
+                loop: true, // Make it loop continuously
+                coverflowEffect: {
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
+                    modifier: 1,
+                    slideShadows: true,
+                },
+                autoplay: {
+                    delay: 3000, // 3 seconds
+                    disableOnInteraction: false, // Continue autoplay even after user interaction
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
             });
 
             const btnPassenger = document.getElementById('btn-passenger');
@@ -596,6 +831,79 @@
 
                 animateCarousel();
             }
+
+            // --- FAQ Dropdown Logic (Moved from app.blade) ---
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const arrowIcon = item.querySelector('.arrow-icon');
+
+                question.addEventListener('click', () => {
+                    const isOpen = answer.classList.contains('open');
+
+                    document.querySelectorAll('.faq-item').forEach(otherItem => {
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        const otherArrow = otherItem.querySelector('.arrow-icon');
+                        if (otherAnswer !== answer && otherAnswer.classList.contains('open')) {
+                            otherAnswer.classList.remove('open');
+                            otherArrow.classList.remove('rotate');
+                        }
+                    });
+
+                    if (isOpen) {
+                        answer.classList.remove('open');
+                        arrowIcon.classList.remove('rotate');
+                    } else {
+                        answer.classList.add('open');
+                        arrowIcon.classList.add('rotate');
+                    }
+                });
+            });
+
+            // --- Modal Logic (Moved from app.blade) ---
+            const modalTriggers = document.querySelectorAll('[data-modal-target]');
+            const modalCloseButtons = document.querySelectorAll('[data-modal-close]');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const modalId = trigger.dataset.modalTarget;
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('open');
+                        document.body.classList.add('overflow-hidden');
+                    }
+                });
+            });
+
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const modalId = button.dataset.modalClose;
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('open');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('open');
+                        document.body.classList.remove('overflow-hidden');
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal-overlay.open').forEach(modal => {
+                        modal.classList.remove('open');
+                        document.body.classList.remove('overflow-hidden');
+                    });
+                }
+            });
         });
 
         // Skeleton Loader Logic

@@ -13,27 +13,40 @@
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl lg:max-w-6xl mx-auto bg-white p-6 md:p-8 rounded-3xl shadow-2xl border-2 border-sky-300">
         <div class="text-center mb-6">
-            <i class="fas fa-check-circle text-sky-600 text-5xl md:text-6xl mb-3 animate-scale-in"></i>
-            <h2 class="text-3xl md:text-4xl font-extrabold text-sky-700 algiotrans-title-text mb-2">Pemesanan Berhasil!</h2>
-            <p class="text-base md:text-lg text-gray-700">Terima kasih telah memesan dengan Algio Trans.</p>
+            {{-- Conditional check mark or hourglass based on payment status --}}
+            @if($booking->payment && $booking->payment->status === 'pending')
+                <i class="fas fa-hourglass-half text-orange-500 text-5xl md:text-6xl mb-3 animate-pulse"></i>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-orange-600 algiotrans-title-text mb-2">Pemesanan Menunggu Pembayaran!</h2>
+                <p class="text-base md:text-lg text-gray-700">Mohon segera lakukan pembayaran untuk mengkonfirmasi pesanan Anda.</p>
+            @else
+                <i class="fas fa-check-circle text-sky-600 text-5xl md:text-6xl mb-3 animate-scale-in"></i>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-sky-700 algiotrans-title-text mb-2">Pemesanan Berhasil!</h2>
+                <p class="text-base md:text-lg text-gray-700">Terima kasih telah memesan dengan Algio Trans.</p>
+            @endif
 
-            @if($booking->payment && $booking->payment->payment_method === 'Transfer Bank BRI' && $booking->payment->status === 'pending')
+            {{-- Informasi Menunggu Verifikasi (hanya tampil jika status payment 'pending') --}}
+            @if($booking->payment && $booking->payment->status === 'pending')
                 <div class="mt-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-800 rounded-lg shadow-sm">
-                    <p class="font-semibold text-lg flex items-center justify-center"><i class="fas fa-hourglass-half mr-2"></i> Pembayaran Menunggu Verifikasi</p>
+                    <p class="font-semibold text-lg flex items-center justify-center"><i class="fas fa-info-circle mr-2"></i> Pembayaran Menunggu Verifikasi</p>
                     <p class="mt-2 text-base">Pesanan Anda telah kami terima dan menunggu pembayaran Anda diverifikasi oleh admin. Kami akan mengirimkan konfirmasi lebih lanjut setelah pembayaran Anda lunas.</p>
                     <p class="mt-2 text-sm text-yellow-700"><b>Estimasi waktu verifikasi beberapa menit, halaman jangan ditutup dan harap refresh ketika menerima notifikasi pembayaran berhasil.</b></p>
+                    <p class="mt-3 text-sm text-yellow-800">
+                        Anda juga dapat mengirimkan bukti transfer ke nomor WhatsApp kami untuk mempercepat proses verifikasi:
+                        <a href="https://wa.me/{{ env('WHATSAPP_CONFIRMATION_NUMBER') }}" target="_blank" class="font-bold text-green-700 hover:underline flex items-center justify-center mt-1">
+                            <i class="fab fa-whatsapp mr-1"></i> {{ env('WHATSAPP_CONFIRMATION_NUMBER_DISPLAY') ?? env('WHATSAPP_CONFIRMATION_NUMBER') }}
+                        </a>
+                    </p>
                 </div>
             @endif
         </div>
 
-        {{-- Action Button (Unduh Tiket) - Pindah ke Atas --}}
+        {{-- Action Button (Unduh Tiket) --}}
         <div class="mb-6 flex justify-center">
-            @if($booking->status === 'paid' || ($booking->payment && $booking->payment->status === 'completed'))
+            @if($booking->payment && $booking->payment->status === 'completed')
                 <a href="#" id="download-ticket-button" class="inline-flex items-center bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-6 rounded-lg text-base transition duration-300 shadow-lg transform hover:scale-105">
                     <i class="fas fa-download mr-2"></i> Unduh Tiket
                 </a>
             @else
-                {{-- Anda bisa menampilkan pesan atau elemen lain jika tombol tidak aktif --}}
                 <span class="inline-flex items-center bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg text-base cursor-not-allowed opacity-75">
                     <i class="fas fa-download mr-2"></i> Tiket Tersedia Setelah Pembayaran Lunas
                 </span>
@@ -61,7 +74,14 @@
                     </div>
 
                     <p><strong>Metode Pembayaran:</strong> <span class="font-medium text-gray-800">{{ $booking->payment->payment_method ?? 'N/A' }}</span></p>
-                    <p><strong>Status Pembayaran:</strong> <span class="font-semibold {{ $booking->status == 'paid' ? 'text-sky-600' : 'text-orange-500' }}">{{ ucfirst($booking->status) }}</span></p>
+                    <p><strong>Status Pembayaran:</strong>
+                        <span class="font-semibold
+                            @if($booking->payment && $booking->payment->status === 'completed') text-sky-600
+                            @elseif($booking->payment && $booking->payment->status === 'pending') text-orange-500
+                            @else text-gray-500 @endif">
+                            {{ ucfirst($booking->payment->status ?? 'N/A') }}
+                        </span>
+                    </p>
                 </div>
 
                 <p class="text-gray-600 text-sm border-t border-sky-200 pt-3">
@@ -104,7 +124,7 @@
             </div>
         </div>
 
-        {{-- Action Buttons (Kembali ke Beranda) - Pindah ke Bawah --}}
+        {{-- Action Buttons (Kembali ke Beranda) --}}
         <div class="mt-8 flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-4">
             <a href="{{ route('home') }}" class="inline-flex items-center bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 rounded-lg text-base transition duration-300 shadow-md transform hover:scale-105">
                 <i class="fas fa-home mr-2"></i> Kembali ke Beranda
@@ -243,9 +263,8 @@
 
         // --- Ticket Download Logic ---
         const downloadButton = document.getElementById('download-ticket-button');
-        // Check if the button exists and if the booking status is 'paid' or payment status is 'completed'
-        // This JavaScript part ensures the download functionality is only active when visible
-        if (downloadButton && ( "{{ $booking->status }}" === 'paid' || ( "{{ $booking->payment->status ?? '' }}" === 'completed' ) ) ) {
+        // Check if the button exists and if the booking payment status is 'completed'
+        if (downloadButton && ( "{{ $booking->payment->status ?? '' }}" === 'completed' ) ) { // Use payment->status for accuracy
             downloadButton.addEventListener('click', (e) => {
                 e.preventDefault(); // Prevent default link behavior
 
@@ -267,7 +286,6 @@
                 }
             });
         }
-        // If the button is not displayed, the event listener won't be attached.
     });
 </script>
 
@@ -298,6 +316,16 @@
     }
     .animate-scale-in {
         animation: scale-in 0.6s ease-out forwards;
+    }
+
+    /* New animation for pending status */
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pulse {
+        animation: pulse 1.5s infinite ease-in-out;
     }
 </style>
 @endsection
